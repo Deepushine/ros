@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<robot name="simple_robot">
+    <!-- Cylinder Link -->
+    <link name="base_link">
+        <visual>
+            <geometry>
+                <cylinder length="0.05" radius="0.2"/>
+            </geometry>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <material name="yellow">
+                <color rgba="1 1 0 1"/>
+            </material>
+        </visual>
+    </link>
+
+    <!-- Sphere Link -->
+    <link name="sphere_link">
+        <visual>
+            <geometry>
+                <sphere radius="0.1"/>
+            </geometry>
+            <origin rpy="0 0 0" xyz="0.3 0 0"/> <!-- Adjust position as needed -->
+            <material name="blue">
+                <color rgba="0 0 1 1"/>
+            </material>
+        </visual>
+    </link>
+
+    <!-- Rectangle Link -->
+    <link name="rectangle_link">
+        <visual>
+            <geometry>
+                <box size="0.1 0.2 0.05"/> <!-- Adjust size as needed -->
+            </geometry>
+            <origin rpy="0 0 0" xyz="-0.3 0 0"/> <!-- Adjust position as needed -->
+            <material name="red">
+                <color rgba="1 0 0 1"/>
+            </material>
+        </visual>
+    </link>
+</robot>

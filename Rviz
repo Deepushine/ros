@@ -1,0 +1,106 @@
+--INSTALL AND USE RVIZ AND OTHER PACKAGES
+	$sudo apt-get install ros-noetic-rviz
+	$roscore (run ros master)
+	$rosrun rviz rviz (#check the working)
+		#close the rviz if working 
+
+--INSTALL FOR URDF MODELING
+	 $sudo apt-get install ros-noetic-urdf
+
+-- TO CHECK THE URDF FILE WE NEED TO INSTALL 
+	$sudo apt-get install liburdfdom-tools
+
+-- CREATE THE WORKSPACE AND CATKIN PACKAGE
+	$mkdir robot_ws
+	$cd robot_ws
+	$mkdir src
+	$cd ..
+	$cd robot_ws
+	$catkin_make
+	$source ~/robot_ws/devel/setup.bash
+	$echo $ROS_PACKAGE_PATH
+	$cd ~/robot_ws/src
+
+--CREATE PACKAGE
+	$catkin_create_pkg my_robot_model roscpp tf2 geometry_msgs urdf rviz joint_state_publisher_gui
+
+--CREATE URDF FILE AND LAUNCH FILE
+	$CD ~/robot_ws/src/robot_model/
+	$mkdir urdf
+	$mkdir launch
+
+--CREATE URDF FILE
+	$cd urdf
+	$gedit robot.urdf
+
+		<?xml version="1.0"?>
+	<robot name="simple robot">
+   	 <link name="base_link">
+        <visual>
+            <geometry>
+              <cylinder length="0.05" radius="0.2"/>
+           	 </geometry>
+           	 <origin rpy="0 0 0" xyz="0 0 0"/>
+           	 <material name="yellow">
+               	 <color rgba="1 1 0 1"/>
+           	 </material>
+        	</visual>
+   	 </link>
+	</robot>
+	
+	$cd .. 
+
+--CREATE LAUNCH FILE
+	$cd launch
+	$gedit robot.launch
+
+<?xml version="1.0"?>
+<launch>
+    <!-- Load the URDF file -->
+    <param name="robot_description" command="cat $(find my_robot_model)/urdf/robot.urdf" />
+
+    <!-- Joint State Publisher GUI -->
+    <node name="joint_state_publisher_gui" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" />
+
+    <!-- Robot State Publisher -->
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+
+    <!-- RViz with predefined configuration -->
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find my_robot_model)/robot.rviz" required="true" />
+</launch>
+
+	
+---------------------------------------------------------------------------------
+
+	$cd ~/robot_ws/
+	$catkin_make
+
+--TEST EVERYTHING IN RVIZ
+	open in a new terminal then run,
+	
+	$roscore
+	
+	go back to orginal terminal,
+	
+	$roslaunch my_robot_model robot.launch
+-------------------------------------------------------------------------------------
+
+When open in RVIZ 
+	then, 
+		change the fixed frame to base_link
+		add robot model
+		then goto file save as config_AS
+then goto robot_ws and open src folder- robot_model_pkg-
+then in search robot.rviz (make sure you have the same name in launch file)
+save it OK!!
+close the rviz and
+
+
+IN same terminal of orginal terminal again open rviz by,
+	$roslaunch my_robot_model robot.launch
+
+
+
+
+
+	
